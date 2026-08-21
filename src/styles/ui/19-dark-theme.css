@@ -1,0 +1,219 @@
+/* ==========================================================================
+   DeepRead UI 分片 19-dark-theme：暗黑模式主题
+   （项目自定义，非原站样式）
+
+   挂钩方式：body[data-ds-dark-theme]（settings store applyTheme 切换该属性）。
+   两部分工作：
+   1. 重新定义设计令牌别名（--dsw-alias-* / --dsw-specific-*）：组件样式
+      全部经 var() 消费这些别名（回退值仅在变量未定义时生效），在 body 上
+      覆盖即可让整个应用跟着变暗，无需逐组件改样式；
+   2. 修正少量硬编码浅色（弹窗描边、侧边栏滚动渐隐遮罩、章节导航磨砂胶囊、
+      复制代码提示层等来自原站捕获样式的写死颜色）。
+
+   调色板复用 tokens.css 既有的 neutral-bluish 阶：
+   #151517(950) 侧边栏 / #1b1b1c(900) 主背景 / #232324(875) 浮层 /
+   #2c2c2e(850) 悬停与气泡 / #353638(800) 覆盖层。
+   ========================================================================== */
+
+body[data-ds-dark-theme] {
+  /* ---------- 背景层级 ---------- */
+  --dsw-alias-bg-base: #151517;
+  --dsw-alias-bg-layer-1: #1b1b1c;
+  --dsw-alias-bg-layer-2: #1b1b1c;
+  --dsw-alias-bg-layer-3: #232324;
+  --dsw-alias-bg-module-platform: #2c2c2e;
+  --dsw-alias-bg-multi-select: #2c2c2e;
+  --dsw-alias-bg-overlay: #353638;
+  --dsw-alias-bg-skeleton: rgba(255, 255, 255, 0.04);
+  /* 主表面 / 悬停填充 / 浅描边：此前从未定义（亮色靠 var() 回退值），
+     导致弹窗按钮 hover、卡片菜单底、阅读器顶栏、导入按钮等在暗色下仍为白色 */
+  --dsw-alias-surface-primary: #1b1b1c;
+  --dsw-alias-fill-secondary: #2c2c2e;
+  --dsw-alias-border-light: rgba(255, 255, 255, 0.1);
+  background: #151517;
+
+  /* ---------- 分隔线 ---------- */
+  --dsw-alias-border-l1: rgba(255, 255, 255, 0.06);
+  --dsw-alias-border-l2: rgba(255, 255, 255, 0.08);
+  --dsw-alias-border-l2-darkmode-thin: rgba(255, 255, 255, 0.08);
+  --dsw-alias-border-l3: rgba(255, 255, 255, 0.1);
+  --dsw-alias-border-l4: rgba(255, 255, 255, 0.14);
+
+  /* ---------- 文字 ---------- */
+  --dsw-alias-label-primary: #e3e4e6;
+  --dsw-alias-label-primary-dimmed: #e3e4e6;
+  --dsw-alias-label-secondary: #b3b6bd;
+  --dsw-alias-label-tertiary: #979da6;
+  --dsw-alias-label-caption: #979da6;
+  --dsw-alias-label-dimmed: #353638;
+  --dsw-alias-label-primary-inverted: #0f1115;
+  --dsw-alias-label-primary-foreground: #fff;
+
+  /* ---------- 按钮 ---------- */
+  --dsw-alias-button-elevated-fill: #232324;
+  --dsw-alias-button-floating-fill: #232324;
+  --dsw-alias-button-floating-hover: #2c2c2e;
+  --dsw-alias-button-ghost-active-fill: rgba(57, 100, 254, 0.18);
+  --dsw-alias-button-ghost-active-hover: rgba(57, 100, 254, 0.26);
+  --dsw-alias-button-ghost-active-border: #679efe;
+
+  /* ---------- 交互态 ---------- */
+  --dsw-alias-interactive-bg-hover: rgba(255, 255, 255, 0.05);
+  --dsw-alias-interactive-bg-hover-solid: #2c2c2e;
+  --dsw-alias-interactive-bg-hover-accent: rgba(255, 255, 255, 0.08);
+  --dsw-alias-interactive-bg-active: rgba(255, 255, 255, 0.1);
+
+  /* ---------- Markdown / 代码 ---------- */
+  --dsw-alias-markdown-code-block: #151517;
+  --dsw-alias-markdown-code-block-banner: #151517;
+  --dsw-alias-markdown-inline-code: #2c2c2e;
+  --dsw-alias-markdown-citation: #2c2c2e;
+  --dsw-alias-markdown-placeholder: #61666b;
+  --dsw-alias-markdown-tag: #2c2c2e;
+
+  /* ---------- 滚动条 ---------- */
+  --dsw-alias-scrollbar-bg-l1: #353638;
+  --dsw-alias-scrollbar-bg-l2: #353638;
+  --dsw-alias-scrollbar-hover-l1: #43454a;
+  --dsw-alias-scrollbar-hover-l2: #43454a;
+
+  /* ---------- 品牌蓝在暗底上的可读性微调 ---------- */
+  --dsw-alias-brand-text: #679efe;
+  /* 选中项文字（如侧边栏当前对话）：亮色为深蓝字，暗底上须反转为亮蓝字 */
+  --dsw-alias-brand-primary-invert: #679efe;
+
+  /* ---------- 复合组件令牌 ---------- */
+  --dsw-specific-bubble: #2c2c2e;
+  --dsw-specific-bubble-highlight: #353638;
+  --dsw-specific-input-major: #1b1b1c;
+  --dsw-specific-login-input: #1b1b1c;
+  --dsw-specific-menu: #232324;
+  --dsw-specific-selector: #2c2c2e;
+  --dsw-specific-tip: #2c2c2e;
+  --dsw-specific-sidebar-fill: #151517;
+  --dsw-specific-sidebar-nav-item-active: #2c2c2e;
+  --dsw-specific-sidebar-nav-item-hover: #232324;
+  /* 选中对话底色：降低品牌蓝透明度，暗底上不再刺眼（配亮蓝文字 #679efe） */
+  --dsw-specific-sidebar-nav-item-active-accent: rgba(57, 100, 254, 0.16);
+
+  /* ---------- 思考块渐隐遮罩 ---------- */
+  --dsw-linear-gradient-think: linear-gradient(180deg, #1b1b1c 20.19%, rgba(27, 27, 28, 0) 100%);
+  --dsw-linear-think-select: linear-gradient(180deg, #232324 20.19%, rgba(35, 35, 36, 0) 100%);
+
+  /* ---------- 浮层滚动条（原站 body[data-ds-dark-theme] 既有规则保持一致） ---------- */
+  --scroll-color: rgba(255, 255, 255, 0.15);
+  --scroll-color-hover: rgba(255, 255, 255, 0.24);
+}
+
+/* ==========================================================================
+   硬编码浅色修正（原站捕获样式中写死的颜色，变量覆盖不到）
+   ========================================================================== */
+
+/* 弹窗统一灰描边 → 暗色半透明白描边（local-overrides.css 的 .modal-stroke 等） */
+body[data-ds-dark-theme] .modal-stroke,
+body[data-ds-dark-theme] .modal-btn,
+body[data-ds-dark-theme] .card-menu,
+body[data-ds-dark-theme] .rename-input,
+body[data-ds-dark-theme] .chat-attach-menu,
+body[data-ds-dark-theme] .chat-jump__btn {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* 浮层菜单底色：比 surface-primary 抬高一档，暗底下更立体（书架/对话卡片菜单） */
+body[data-ds-dark-theme] .card-menu {
+  background: #232324;
+}
+
+/* 回到底部按钮底色（写死 #fff） */
+body[data-ds-dark-theme] .chat-jump__btn {
+  background: #232324;
+}
+
+/* 侧边栏对话列表上下滚动渐隐遮罩（写死 #fff 渐变，跟随侧边栏底色 #151517） */
+body[data-ds-dark-theme] ._4ce999d:before,
+body[data-ds-dark-theme] ._4ce999d:after {
+  background: linear-gradient(#151517 20.19%, rgba(21, 21, 23, 0) 100%);
+}
+
+/* 内容区顶部滚动渐隐遮罩（写死 #fff 渐变） */
+body[data-ds-dark-theme] .b2ab7dec {
+  background: linear-gradient(rgba(27, 27, 28, 0) 0%, #1b1b1c 100%);
+}
+
+/* 代码块复制提示浮层（写死 #ffffffb3） */
+body[data-ds-dark-theme] .c760857e {
+  background-color: rgba(35, 35, 36, 0.92);
+}
+
+/* 章节导航磨砂胶囊（写死 rgba(255,255,255,.8) 白底） */
+body[data-ds-dark-theme] .chat-toc__pill {
+  background-color: rgba(21, 21, 23, 0.75);
+}
+
+/* 章节导航圆点与自滚动条（写死黑色系） */
+body[data-ds-dark-theme] .chat-toc__dot {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 当前章节圆点须保持品牌蓝：上面通用圆点的暗色规则特异性更高，
+   会盖过 local-overrides 的 --current 规则，此处显式压回 */
+body[data-ds-dark-theme] .chat-toc__item--current .chat-toc__dot {
+  background-color: #3964fe;
+}
+
+body[data-ds-dark-theme] .chat-toc__item:hover .chat-toc__dot {
+  background-color: rgba(255, 255, 255, 0.55);
+}
+
+body[data-ds-dark-theme] .chat-toc__item--current:hover .chat-toc__dot {
+  background-color: #3964fe;
+}
+
+body[data-ds-dark-theme] .chat-toc__list::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 附件菜单两栏分隔线与列表滚动条（写死黑色系） */
+body[data-ds-dark-theme] .chat-attach-menu__col + .chat-attach-menu__col {
+  border-left-color: rgba(255, 255, 255, 0.08);
+}
+
+body[data-ds-dark-theme] .chat-attach-menu__list::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 消息列表原生滚动滑块（local-overrides 写死灰 #c1c1c1） */
+body[data-ds-dark-theme] .chat-scroll.ds-scroll-area--enabled::-webkit-scrollbar-thumb {
+  background-color: #43454a;
+}
+
+body[data-ds-dark-theme] .chat-scroll.ds-scroll-area--enabled::-webkit-scrollbar-thumb:hover {
+  background-color: #545557;
+}
+
+/* 帮助弹窗 / 通用弹窗阴影加深一档，暗底下更立体 */
+body[data-ds-dark-theme] .modal-stroke,
+body[data-ds-dark-theme] .card-menu,
+body[data-ds-dark-theme] .chat-attach-menu {
+  box-shadow:
+    0 0 1px 0 rgba(0, 0, 0, 0.4),
+    0 12px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* 帮助菜单主体区滚动条（浅色下为浏览器默认灰，暗底下须变深色滑块） */
+body[data-ds-dark-theme] .help-modal__main {
+  scrollbar-color: #43454a transparent;
+}
+
+body[data-ds-dark-theme] .help-modal__main::-webkit-scrollbar {
+  width: 8px;
+}
+
+body[data-ds-dark-theme] .help-modal__main::-webkit-scrollbar-thumb {
+  background-color: #43454a;
+  border-radius: 4px;
+}
+
+body[data-ds-dark-theme] .help-modal__main::-webkit-scrollbar-thumb:hover {
+  background-color: #545557;
+}

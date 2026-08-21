@@ -1,0 +1,805 @@
+/* ==========================================================================
+   DeepRead UI 分片 04-auth：认证页面样式
+   （原 ui.css 第 1742-2536 行，795 行）
+
+   登录/注册/找回密码/微信绑定/手机验证/改绑手机/注销账号等认证相关页面，
+以及 ds-text 排版工具类。样式来自原站，本项目当前未使用，保留备用。
+   --------------------------------------------------------------------------
+   本文件源自原站构建产物，规则顺序与原文件一致。分片仅按顺序物理切分，
+   不改变层叠结果；严禁调整本目录各分片的先后顺序（见 ui.css 入口）。
+   ========================================================================== */
+
+.ds-change-mobile-number-modal {
+  max-width:400px;
+  margin:0 auto;
+}
+
+.ds-change-mobile-number-modal .ds-form-item {
+  width:100%;
+}
+
+.ds-change-mobile-number-modal .ds-form-item .ds-input {
+  border-radius:22px;
+  padding:0 14px;
+}
+
+.ds-change-mobile-number-modal .ds-form-item .ds-input.ds-input--bordered {
+  box-shadow:inset 0 0 0 1px var(--dsw-alias-border-l2);
+}
+
+.ds-change-mobile-number-modal .ds-form-item .ds-input.ds-input--bordered.ds-input--none:focus-within {
+  box-shadow:inset 0 0 0 1px var(--dsw-alias-brand-primary);
+}
+
+.ds-change-mobile-number-modal .ds-form-item .ds-input.ds-input--bordered.ds-input--error {
+  box-shadow:inset 0 0 0 1px var(--dsw-alias-state-error-primary);
+}
+
+.ds-change-mobile-number-modal .ds-form-item .ds-input .ds-input__input {
+  caret-color:var(--dsw-alias-brand-primary);
+}
+
+.ds-change-mobile-number-modal .ds-form-item .ds-form-item__feedback {
+  color:var(--dsw-alias-state-error-primary);
+  font:var(--dsw-font-xxxs-11);
+  min-height:20px;
+  margin-left:14px;
+}
+
+.ds-change-mobile-number-modal__title {
+  text-align:center;
+  margin-bottom:8px;
+  font-size:24px;
+  font-weight:600;
+  line-height:32px;
+}
+
+.ds-change-mobile-number-modal__description {
+  font:var(--dsw-font-s-14);
+  color:var(--dsw-alias-label-secondary);
+}
+
+.ds-change-mobile-number-modal__description p {
+  margin-top:8px;
+  margin-bottom:0;
+}
+
+.ds-change-mobile-number-modal__description .strong {
+  font:var(--dsw-font-s-strong-14);
+  color:var(--dsw-alias-label-primary);
+}
+
+.ds-change-mobile-number-modal__old-mobile {
+  font:var(--dsw-font-xl-24);
+  color:var(--dsw-alias-label-primary);
+  text-align:center;
+  height:44px;
+  margin-bottom:20px;
+  padding-top:20px;
+  line-height:44px;
+}
+
+.ds-change-mobile-number-modal__form-item {
+  margin-bottom:20px;
+}
+
+.ds-change-mobile-number-modal__button {
+  margin-top:24px;
+}
+
+.ds-verify-code-input-divider {
+  background-color:var(--dsw-alias-border-l2);
+  flex-shrink:0;
+  width:1px;
+  height:20px;
+  margin-right:12px;
+}
+
+.ds-verify-code-input-countdown {
+  white-space:nowrap;
+  font-family:inherit;
+  font-variant-numeric:tabular-nums!important;
+}
+
+.ds-verify-code-input-form-item .ds-input__suffix {
+  align-items:center;
+  display:flex;
+}
+
+.ds-sign-in-form__main {
+  align-items:stretch;
+  gap:32px;
+  display:flex;
+}
+
+@media not all and (width>=768px) {
+  .ds-sign-in-form__main {
+    flex-direction:column;
+    gap:20px;
+  }
+}
+
+.ds-sign-in-form__form-footer {
+  justify-content:space-between;
+  margin-bottom:12px;
+  display:flex;
+}
+
+.ds-sign-in-form__form-footer .ds-button {
+  font:var(--dsw-font-xxs-12);
+}
+
+.ds-sign-in-form__social-buttons {
+  width:100%;
+  margin-top:16px;
+}
+
+.ds-sign-in-form__social-links {
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  display:flex;
+  position:relative;
+}
+
+.ds-sign-in-form__social-links--stacked {
+  flex-direction:column;
+}
+
+.ds-sign-in-form__social-links-measurer {
+  visibility:hidden;
+  white-space:nowrap;
+  pointer-events:none;
+  align-items:center;
+  gap:8px;
+  height:0;
+  display:flex;
+  position:absolute;
+  top:0;
+  left:0;
+  overflow:hidden;
+}
+
+.ds-sign-in-form__social-link {
+  font:var(--dsw-font-xxs-12);
+  text-align:center;
+}
+
+.ds-sign-in-form__social-links--stacked .ds-sign-in-form__social-link {
+  max-width:100%;
+}
+
+.ds-sign-in-form__social-link-measure {
+  font:var(--dsw-font-xxs-12);
+}
+
+.ds-sign-in-form__social-link-separator {
+  background:var(--dsw-alias-border-l2);
+  flex:none;
+  width:1px;
+  height:12px;
+}
+
+.ds-sign-in-form__social-links--stacked>.ds-sign-in-form__social-link-separator {
+  display:none;
+}
+
+.ds-sign-in-form__icon {
+  justify-content:center;
+  align-items:center;
+  margin:0 auto 50px;
+  line-height:0;
+  display:flex;
+}
+
+.ds-sign-in-form__icon svg {
+  height:28px;
+}
+
+.ds-sign-in-form__main-wechat {
+  box-sizing:border-box;
+  flex:0 0 240px;
+  align-self:stretch;
+  width:240px;
+  min-width:0;
+  max-width:100%;
+  display:flex;
+}
+
+@media not all and (width>=768px) {
+  .ds-sign-in-form__main-wechat {
+    flex-basis:auto;
+    width:100%;
+    margin-top:12px;
+  }
+}
+
+.ds-sign-up-form__register-button {
+  margin-top:auto;
+  font-weight:500;
+}
+
+.ds-sign-up-form__icon {
+  justify-content:center;
+  align-items:center;
+  margin:auto auto 40px;
+  line-height:0;
+  display:flex;
+}
+
+.ds-sign-up-form__icon>svg {
+  height:44px;
+}
+
+.ds-sign-up-form__description {
+  color:var(--dsw-alias-label-tertiary);
+  text-align:center;
+  margin-bottom:8px;
+  font-size:12px;
+  line-height:140%;
+}
+
+.ds-sign-up-form__form-footer {
+  justify-content:center;
+  margin-top:16px;
+  font-weight:500;
+  display:flex;
+}
+
+.ds-sign-up-form-wrapper .ds-sign-up-form__agreement-text .ds-form-item__content {
+  text-align:center;
+}
+
+.ds-sign-up-form-wrapper .ds-sign-up-form__agreement-text {
+  margin-bottom:20px;
+}
+
+.ds-sign-in-with-wechat-block {
+  background:var(--dsw-specific-sidebar-fill);
+  border:1px solid var(--dsw-alias-border-l2);
+  box-sizing:border-box;
+  border-radius:10px;
+  flex-direction:column;
+  flex:1;
+  width:100%;
+  min-width:0;
+  max-width:100%;
+  height:100%;
+  padding:38px 0 24px;
+  display:flex;
+  position:relative;
+}
+
+.ds-sign-in-with-wechat-block__wrapper {
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  min-width:0;
+  margin-bottom:20px;
+  display:flex;
+}
+
+.ds-sign-in-with-wechat-block__wrapper iframe {
+  border-radius:8px;
+  width:160px;
+  height:160px;
+  box-shadow:0 4px 10px #00000005,0 2px 4px #0000000a,0 0 1px #0003,0 0 4px #00000005,0 12px 36px #0000000f;
+}
+
+.ds-sign-in-with-wechat-block__description {
+  color:var(--dsw-alias-label-primary);
+  font:var(--dsw-font-s-14);
+  text-align:center;
+  box-sizing:border-box;
+  flex-flow:row;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+  width:100%;
+  min-width:0;
+  max-width:100%;
+  padding-left:0;
+  padding-right:6px;
+  display:flex;
+  position:relative;
+}
+
+.ds-sign-in-with-wechat-block__description--stacked {
+  flex-direction:column;
+}
+
+.ds-sign-in-with-wechat-block__description-measurer {
+  visibility:hidden;
+  white-space:nowrap;
+  pointer-events:none;
+  align-items:center;
+  gap:6px;
+  height:0;
+  display:flex;
+  position:absolute;
+  top:0;
+  left:0;
+  overflow:hidden;
+}
+
+.ds-sign-in-with-wechat-block__logo-measure {
+  flex:none;
+  width:20px;
+  height:20px;
+}
+
+.ds-sign-in-with-wechat-block__description-text-measure {
+  font:var(--dsw-font-s-14);
+}
+
+.ds-sign-in-with-wechat-block__description-text {
+  white-space:nowrap;
+  min-width:0;
+  max-width:100%;
+}
+
+.ds-sign-in-with-wechat-block__description--stacked .ds-sign-in-with-wechat-block__description-text {
+  overflow-wrap:break-word;
+  word-break:break-word;
+  white-space:normal;
+  width:156px;
+  max-width:100%;
+}
+
+.ds-sign-in-with-wechat-block__logo {
+  color:#00bc0c;
+  flex:none;
+  width:20px;
+  height:20px;
+}
+
+.ds-forgot-password-form__icon {
+  justify-content:center;
+  align-items:center;
+  margin:0 auto 50px;
+  line-height:0;
+  display:flex;
+}
+
+.ds-forgot-password-form__icon>svg {
+  height:28px;
+}
+
+.ds-forgot-password-form__title {
+  text-align:center;
+  font:var(--dsw-font-base-strong-16);
+  color:var(--dsw-alias-label-primary);
+  margin-bottom:8px;
+}
+
+.ds-forgot-password-form__loading-wrapper {
+  color:var(--dsw-alias-brand-primary);
+  justify-content:center;
+  align-items:center;
+  padding:28px 0;
+  font-size:28px;
+  display:flex;
+}
+
+.ds-forgot-password-form__form-footer {
+  justify-content:center;
+  margin-top:16px;
+  font-weight:500;
+  display:flex;
+}
+
+.ds-forgot-password-form__description {
+  text-align:center;
+  font:var(--dsw-font-xxs-12);
+  color:var(--dsw-alias-label-tertiary);
+  margin-bottom:16px;
+}
+
+.ds-forgot-password-form__main-button {
+  margin-top:20px;
+}
+
+.ds-auth-delete-account.ds-modal-content.ds-modal-content--dialog {
+  width:min(480px,96%);
+}
+
+.ds-auth-delete-account {
+  margin:auto;
+}
+
+.ds-auth-delete-account .ds-auth-delete-account__tips {
+  background:var(--dsw-specific-tip);
+  border-radius:12px;
+  flex-direction:column;
+  align-self:stretch;
+  align-items:flex-start;
+  padding:12px 14px;
+  display:flex;
+}
+
+.ds-auth-delete-account .ds-auth-delete-account__tips-entry {
+  margin-bottom:10px;
+}
+
+.ds-auth-delete-account .ds-auth-delete-account__tips-entry:last-of-type {
+  margin-bottom:0;
+}
+
+.ds-auth-delete-account .ds-auth-delete-account__tips-title {
+  color:var(--dsw-alias-label-primary);
+  font:var(--dsw-font-s-strong-14);
+  margin-bottom:2px;
+}
+
+.ds-auth-delete-account .ds-auth-delete-account__tips-desc {
+  color:var(--dsw-alias-label-tertiary);
+  font:var(--dsw-font-xxs-12);
+}
+
+.ds-auth-delete-account .ds-auth-delete-account__input-confirm-tip {
+  color:var(--dsw-alias-label-primary);
+  font:var(--dsw-font-s-14);
+  margin:24px 0 8px;
+}
+
+.ds-authorized-container__loading {
+  color:var(--dsw-alias-brand-primary);
+  justify-content:center;
+  align-items:center;
+  font-size:21px;
+  display:flex;
+}
+
+.ds-sider__policies-footer {
+  color:var(--dsw-alias-label-caption);
+  flex-wrap:wrap;
+  align-items:center;
+  padding:0 12px;
+  font-size:12px;
+  font-weight:400;
+  line-height:20px;
+  display:flex;
+}
+
+.ds-sider__policies-footer>a {
+  color:var(--dsw-alias-label-tertiary);
+}
+
+.ds-sider__policies-footer>span {
+  text-align:center;
+  width:26px;
+}
+
+.ds-banned-container__wrapper {
+  font-size:var(--ds-font-size-m);
+  color:var(--dsw-alias-label-primary);
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  display:flex;
+}
+
+.ds-banned-container__logo,
+.ds-banned-container__slogan {
+  line-height:var(--ds-line-height-m);
+  text-align:center;
+  margin-bottom:20px;
+  padding:0 20px;
+}
+
+@media not all and (width>=440px) {
+  .ds-banned-container__logo svg {
+    width:70%;
+  }
+}
+
+.ds-text.ds-text--block {
+  display:block;
+}
+
+.ds-text.ds-text--monospace {
+  font-family:var(--ds-font-family-code);
+}
+
+.ds-text.ds-text--fxs {
+  font-size:var(--ds-font-size-xs);
+}
+
+.ds-text.ds-text--fxsp {
+  font-size:var(--ds-font-size-xsp);
+}
+
+.ds-text.ds-text--fs {
+  font-size:var(--ds-font-size-s);
+}
+
+.ds-text.ds-text--fsp {
+  font-size:var(--ds-font-size-sp);
+}
+
+.ds-text.ds-text--fm {
+  font-size:var(--ds-font-size-m);
+}
+
+.ds-text.ds-text--lxs {
+  line-height:var(--ds-line-height-xs);
+}
+
+.ds-text.ds-text--lxsp {
+  line-height:var(--ds-line-height-xsp);
+}
+
+.ds-text.ds-text--ls {
+  line-height:var(--ds-line-height-s);
+}
+
+.ds-text.ds-text--lsp {
+  line-height:var(--ds-line-height-sp);
+}
+
+.ds-text.ds-text--lm {
+  line-height:var(--ds-line-height-m);
+}
+
+.ds-text.ds-text--label1 {
+  color:var(--dsw-alias-label-primary);
+}
+
+.ds-text.ds-text--label2 {
+  color:var(--dsw-alias-label-secondary);
+}
+
+.ds-text.ds-text--label3 {
+  color:var(--dsw-alias-label-tertiary);
+}
+
+.ds-auth-footer {
+  font-size:var(--ds-font-size-sp);
+  line-height:var(--ds-line-height-sp);
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  display:flex;
+}
+
+.ds-mobile-verification-form__icon {
+  justify-content:center;
+  align-items:center;
+  margin:0 auto 50px;
+  line-height:0;
+  display:flex;
+}
+
+.ds-mobile-verification-form__icon>svg {
+  height:28px;
+}
+
+.ds-mobile-verification-form__title {
+  text-align:center;
+  font:var(--dsw-font-base-strong-16);
+  color:var(--dsw-alias-label-primary);
+  margin-bottom:8px;
+}
+
+.ds-mobile-verification-form__loading-wrapper {
+  color:var(--dsw-alias-brand-primary);
+  justify-content:center;
+  align-items:center;
+  padding:28px 0;
+  font-size:28px;
+  display:flex;
+}
+
+.ds-mobile-verification-form__description {
+  text-align:center;
+  font:var(--dsw-font-xxs-12);
+  color:var(--dsw-alias-label-tertiary);
+  margin-bottom:16px;
+}
+
+.ds-mobile-verification-form__bind-button {
+  margin-top:20px;
+}
+
+.ds-bind-wechat-dialog__content {
+  flex-direction:column;
+  align-items:center;
+  gap:24px;
+  display:flex;
+}
+
+.ds-bind-wechat-dialog__qr-section {
+  justify-content:center;
+  align-items:center;
+  width:160px;
+  height:160px;
+  display:flex;
+  position:relative;
+}
+
+.ds-bind-wechat-dialog__qr-section iframe {
+  width:100%;
+  height:100%;
+  color-scheme:auto;
+}
+
+.ds-bind-wechat-dialog__qr-section .ds-bind-wechat-dialog__qr,
+.ds-bind-wechat-dialog__qr-section .ds-bind-wechat-dialog__qr-skeleton,
+.ds-bind-wechat-dialog__qr-section .ds-bind-wechat-dialog__qr-error {
+  border-radius:0;
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0;
+  left:0;
+}
+
+.ds-bind-wechat-dialog__title {
+  color:var(--dsw-alias-label-primary);
+  font:var(--dsw-font-base-strong-16);
+  text-align:center;
+  margin-top:-34px;
+  padding:0 38px;
+}
+
+.ds-bind-wechat-dialog__description {
+  color:var(--dsw-alias-label-tertiary);
+  font:var(--dsw-font-xxs-12);
+  text-align:center;
+}
+
+.ds-bind-wechat-dialog__qr-error {
+  color:var(--dsw-alias-label-tertiary);
+  font:var(--dsw-font-s-14);
+  background-color:#f5f5f5;
+  align-items:center;
+  display:flex;
+}
+
+.ds-bind-wechat-dialog__qr-error-message {
+  text-align:center;
+}
+
+.c994dda2 {
+  box-sizing:border-box;
+  flex-direction:column;
+  align-items:stretch;
+  height:100vh;
+  display:flex;
+  overflow:auto;
+}
+
+@supports (top:env(safe-area-inset-top)) {
+  .c994dda2 {
+    padding-top:env(safe-area-inset-top);
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+}
+
+._47c279e {
+  flex-shrink:0;
+}
+
+._99ad066 {
+  flex-direction:column;
+  flex-grow:1;
+  flex-shrink:0;
+  justify-content:safe center;
+  align-items:safe center;
+  display:flex;
+  position:relative;
+}
+
+._5178cc4 {
+  justify-content:center;
+  padding:32px 18px 20px;
+  display:flex;
+  position:absolute;
+  bottom:0;
+}
+
+.e2394955 {
+  justify-content:center;
+  align-items:center;
+  margin:auto auto 50px;
+  line-height:0;
+  display:flex;
+}
+
+.e2394955>svg {
+  height:28px;
+}
+
+.aea2b515 {
+  flex-direction:column;
+  min-height:100vh;
+  display:flex;
+}
+
+.e84f084b {
+  cursor:pointer;
+  padding:21px 0 0 16px;
+  position:fixed;
+}
+
+.e84f084b._53a16b4 {
+  cursor:default;
+}
+
+._35401d9 {
+  text-align:center;
+  flex-direction:column;
+  flex:1;
+  justify-content:center;
+  align-items:center;
+  display:flex;
+}
+
+.b99592af img {
+  width:100px;
+  height:100px;
+  margin-bottom:24px;
+}
+
+.d355b87a {
+  color:var(--dsw-alias-label-tertiary);
+  font:var(--dsw-font-s-14);
+  max-width:80%;
+  margin-bottom:24px;
+}
+
+.ds-virtual-list {
+  max-height:inherit;
+  overflow-anchor:none;
+  outline:none;
+  min-width:1px;
+  height:100%;
+  overflow:hidden auto;
+}
+
+.ds-virtual-list.ds-virtual-list--ios-compensation-enabled {
+  overscroll-behavior:none;
+}
+
+.ds-virtual-list.ds-virtual-list--x-scrollable {
+  overflow-x:auto;
+}
+
+.ds-virtual-list:not(.ds-virtual-list--show-scrollbar) {
+  scrollbar-width:none;
+}
+
+.ds-virtual-list:not(.ds-virtual-list--show-scrollbar)::-webkit-scrollbar {
+  width:0;
+  height:0;
+  display:none;
+}
+
+.ds-virtual-list:not(.ds-virtual-list--show-scrollbar)::-webkit-scrollbar-track-piece {
+  width:0;
+  height:0;
+  display:none;
+}
+
+.ds-virtual-list:not(.ds-virtual-list--show-scrollbar)::-webkit-scrollbar-thumb {
+  width:0;
+  height:0;
+  display:none;
+}
+
+.ds-virtual-list.ds-virtual-list--empty-centered {
+  flex-direction:column;
+  display:flex;
+}
+
+.ds-virtual-list-empty.ds-virtual-list-empty--center {
+  flex:1;
+  justify-content:center;
+  align-items:center;
+  min-height:0;
+  display:flex;
+}

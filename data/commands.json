@@ -1,0 +1,39 @@
+[
+  {
+    "id": "open-book",
+    "patterns": ["开始阅读", "开始阅读：", "开始阅读:"],
+    "action": "OPEN_BOOK",
+    "comment": "开始阅读电子书"
+  },
+  {
+    "id": "next-page",
+    "patterns": ["下一页", "往后翻", "下一章", "下一节"],
+    "action": "NEXT_PAGE",
+    "comment": "向下翻一页"
+  },
+  {
+    "id": "prev-page",
+    "patterns": ["上一页", "往前翻", "上一章", "上一节"],
+    "action": "PREV_PAGE",
+    "comment": "向上翻一页"
+  },
+  {
+    "id": "view-toc",
+    "patterns": ["目录", "查看目录", "显示目录"],
+    "action": "VIEW_TOC",
+    "comment": "查看电子书的目录"
+  },
+  {
+    "id": "jump-to",
+    "patterns": ["跳转", "跳转：", "跳转:"],
+    "action": "JUMP_TO",
+    "comment": "跳转到某一章"
+  },
+  {
+    "id": "easter-egg",
+    "patterns": ["彩蛋"],
+    "action": "EASTER_EGG",
+    "hidden": true,
+    "comment": "输出彩蛋图片"
+  }
+]

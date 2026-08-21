@@ -1,0 +1,64 @@
+{
+  "name": "deepread",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "dev:all": "node scripts/dev.mjs",
+    "build": "vite build",
+    "build:web": "node scripts/build-web.mjs",
+    "build:web-lite": "node scripts/build-web.mjs --lite",
+    "build:desktop": "node scripts/build-desktop.mjs",
+    "dev:desktop": "electron electron/main.js",
+    "preview": "vite preview",
+    "server": "node server/index.js"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.7.13",
+    "epubjs": "^0.3.93",
+    "express": "^5.2.1",
+    "jszip": "^3.10.1",
+    "multer": "^2.2.0",
+    "pdf-to-img": "^6.2.0",
+    "pdfjs-dist": "^5.6.205",
+    "pinia": "^4.0.2",
+    "undici": "^7.29.0",
+    "vue": "^3.5.40",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.8",
+    "electron": "^43.4.1",
+    "electron-builder": "^26.15.3",
+    "vite": "^8.1.5",
+    "vite-plugin-vue-devtools": "^8.1.5"
+  },
+  "engines": {
+    "node": "^22.18.0 || >=24.12.0"
+  },
+  "build": {
+    "appId": "com.huaji.deepread",
+    "productName": "DeepRead",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "server/**",
+      "electron/**",
+      "src/assets/image/**",
+      "src/utils/**",
+      "data/*.json",
+      "data/database/**"
+    ],
+    "asar": false,
+    "win": {
+      "target": [
+        "zip"
+      ],
+      "icon": "electron/logo.png"
+    }
+  }
+}

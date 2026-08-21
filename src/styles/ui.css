@@ -1,0 +1,56 @@
+/* ==========================================================================
+   DeepRead 核心 UI 样式（入口文件）
+
+   原本 1.2 万行的原站构建产物样式已按层叠顺序物理切分为 ui/ 目录下的
+   18 个功能分片（每个 ≤1000 行），由本文件按编号顺序 @import 串联。
+   Vite 在开发与构建时会把它们内联合并为单一样式表，分片仅影响源码
+   组织，不改变层叠顺序与渲染结果。
+
+   分片内容速览（详见各分片头部注释）：
+   01-motion         动效与加载指示
+   02-button         按钮与轻量反馈组件（toast/banner/notification）
+   03-form           表单与弹窗基础组件（input/modal/scroll-area/skeleton）
+   04-auth           认证页面样式（登录/注册/微信绑定，当前未用，保留备用）
+   05-overlay        浮层与排版工具（tooltip/dropdown/virtual-list/flex）
+   06-form-controls  表单控件与对话页消息区（radio/textarea/segmented）
+   07-lightbox       图片查看器 fancy-box（当前未用，保留备用）
+   08-think-content  AI 思考过程内容块
+   09-checkbox       复选框与原站杂项
+   10-chat-input     对话输入区与模式选择器（ChatInput/ChatHome）
+   11-sidebar        侧边栏与对话页标题栏（SideBar/ChatView）
+   12-switch-select  开关与下拉选择器（switch/select）
+   13-app-layout     应用布局与内容区（侧边栏面板/header/内容容器）
+   14-app-misc       原站杂项（弹窗/cookie 横幅/字体补丁）
+   15-utilities      项目自定义工具类（非原站样式：icon-20/help-corner）
+   16-base-markdown  基础重置与 Markdown 正文
+   17-code-block     代码块主题配色（prism token 明暗两套）
+   18-global-tail    全局收尾（重置/设计令牌副本/暗色主题）
+   19-dark-theme     项目自定义暗黑模式主题（body[data-ds-dark-theme]）
+
+   维护规则：
+   1. 严禁调换或删除下列 @import 顺序——原站样式存在层叠依赖，
+      顺序改变会改变渲染结果；
+   2. 新增样式放入对应功能分片；新功能请新建「NN-名称.css」，
+      按编号顺序在下方追加 @import（编号必须连续递增）；
+   3. 引入顺序参见 src/main.js：tokens → fonts → ui(本文件) → local-overrides。
+   ========================================================================== */
+
+@import "./ui/01-motion.css";
+@import "./ui/02-button.css";
+@import "./ui/03-form.css";
+@import "./ui/04-auth.css";
+@import "./ui/05-overlay.css";
+@import "./ui/06-form-controls.css";
+@import "./ui/07-lightbox.css";
+@import "./ui/08-think-content.css";
+@import "./ui/09-checkbox.css";
+@import "./ui/10-chat-input.css";
+@import "./ui/11-sidebar.css";
+@import "./ui/12-switch-select.css";
+@import "./ui/13-app-layout.css";
+@import "./ui/14-app-misc.css";
+@import "./ui/15-utilities.css";
+@import "./ui/16-base-markdown.css";
+@import "./ui/17-code-block.css";
+@import "./ui/18-global-tail.css";
+@import "./ui/19-dark-theme.css";

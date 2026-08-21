@@ -1,0 +1,541 @@
+/* ==========================================================================
+   DeepRead UI 分片 16-base-markdown：基础重置与 Markdown 正文
+   （原 ui.css 第 10620-11150 行，531 行）
+
+   body/page 字体与重置、暗色模式 color-scheme、ds-markdown 正文全套
+（标题/列表/表格/引用/RTL 语言适配/数学公式/引用标注/内嵌 HTML）。
+   --------------------------------------------------------------------------
+   本文件源自原站构建产物，规则顺序与原文件一致。分片仅按顺序物理切分，
+   不改变层叠结果；严禁调整本目录各分片的先后顺序（见 ui.css 入口）。
+   ========================================================================== */
+
+body,
+page,
+.ds-theme {
+  --ds-control-height-xl:44px;
+  --ds-control-height-l:40px;
+  --ds-control-height-m:36px;
+  --ds-control-height-s:32px;
+  --ds-control-height-xs:28px;
+  --ds-font-weight-strong:600;
+  --ds-font-size-l:16px;
+  --ds-line-height-l:28px;
+  --ds-font-size-m:14px;
+  --ds-line-height-m:25px;
+  --ds-font-size-sp:13px;
+  --ds-line-height-sp:23px;
+  --ds-font-size-s:12px;
+  --ds-line-height-s:21px;
+  --ds-font-size-xsp:11px;
+  --ds-line-height-xsp:19.5px;
+  --ds-font-size-xs:10px;
+  --ds-line-height-xs:18px;
+  --ds-ease-in-out:cubic-bezier(.4, 0, .2, 1);
+  --ds-ease-in:cubic-bezier(.4, 0, 1, 1);
+  --ds-ease-out:cubic-bezier(0, 0, .2, 1);
+  --ds-font-family-code:Menlo, Monaco, Consolas, "Cascadia Mono", "Ubuntu Mono", "DejaVu Sans Mono", "Liberation Mono", "JetBrains Mono", "Fira Code", Cousine, "Roboto Mono", "Courier New", Courier, sans-serif, system-ui;
+  --ds-transition-duration:.2s;
+  --ds-transition-duration-fast:.1s;
+  --ds-transition-duration-slow:.3s;
+}
+
+body {
+  font-size:var(--ds-font-size-m);
+  color:var(--dsw-alias-label-primary);
+  -webkit-text-size-adjust:none;
+  margin:0;
+}
+
+body,
+page {
+  font-family:var(--dsw-font-family);
+}
+
+body {
+  -webkit-tap-highlight-color:transparent;
+}
+
+body.apple,
+body.en_US,
+body.apple .ds-theme,
+body.en_US .ds-theme {
+  --ds-font-weight-strong:500;
+}
+
+body.dark {
+  color-scheme:dark;
+}
+
+@media (prefers-color-scheme:dark) {
+  page {
+    background-color:var(--dsw-alias-bg-base);
+    color:var(--dsw-alias-label-primary);
+    color-scheme:dark;
+  }
+}
+
+.ds-markdown {
+  font:var(--dsw-font-markdown-base);
+  color:var(--dsw-alias-label-primary);
+}
+
+.ds-markdown strong {
+  font-weight:600;
+}
+
+.ds-markdown img {
+  max-width:100%;
+}
+
+.ds-markdown h1 {
+  font:var(--dsw-font-markdown-h1);
+}
+
+.ds-markdown h2 {
+  font:var(--dsw-font-markdown-h2);
+}
+
+.ds-markdown h3 {
+  font:var(--dsw-font-markdown-h3);
+}
+
+.ds-markdown h4 {
+  font:var(--dsw-font-markdown-h4);
+}
+
+.ds-markdown h5,
+.ds-markdown h6 {
+  font:var(--dsw-font-markdown-base-strong);
+}
+
+.ds-markdown h1 strong,
+.ds-markdown h2 strong,
+.ds-markdown h3 strong,
+.ds-markdown h4 strong,
+.ds-markdown h5 strong,
+.ds-markdown h6 strong {
+  font-weight:inherit;
+}
+
+.ds-markdown h1,
+.ds-markdown h2,
+.ds-markdown h3 {
+  margin:32px 0 16px;
+}
+
+.ds-markdown h4,
+.ds-markdown h5,
+.ds-markdown h6,
+.ds-markdown .ds-markdown-paragraph {
+  margin:16px 0;
+}
+
+.ds-markdown h4+ul,
+.ds-markdown h5+ul,
+.ds-markdown h6+ul,
+.ds-markdown h4+ol,
+.ds-markdown h5+ol,
+.ds-markdown h6+ol {
+  margin-top:8px;
+}
+
+.ds-markdown h4:has(+ul) {
+  margin-bottom:8px;
+}
+
+.ds-markdown h5:has(+ul) {
+  margin-bottom:8px;
+}
+
+.ds-markdown h6:has(+ul) {
+  margin-bottom:8px;
+}
+
+.ds-markdown h4:has(+ol) {
+  margin-bottom:8px;
+}
+
+.ds-markdown h5:has(+ol) {
+  margin-bottom:8px;
+}
+
+.ds-markdown h6:has(+ol) {
+  margin-bottom:8px;
+}
+
+.ds-markdown h1 .header-anchor,
+.ds-markdown h2 .header-anchor,
+.ds-markdown h3 .header-anchor,
+.ds-markdown h4 .header-anchor,
+.ds-markdown h5 .header-anchor,
+.ds-markdown h6 .header-anchor {
+  opacity:0;
+  margin-left:4px;
+}
+
+.ds-markdown h1:hover .header-anchor,
+.ds-markdown h2:hover .header-anchor,
+.ds-markdown h3:hover .header-anchor,
+.ds-markdown h4:hover .header-anchor,
+.ds-markdown h5:hover .header-anchor,
+.ds-markdown h6:hover .header-anchor {
+  opacity:1;
+}
+
+.ds-markdown a:not(.ds-a) {
+  color:var(--dsw-alias-brand-text);
+  transition:box-shadow var(--ds-transition-duration) var(--ds-ease-in-out);
+  border:2px solid #fff0;
+  border-width:2px 3px;
+  margin-left:-3px;
+  margin-right:-3px;
+  text-decoration:none;
+  position:relative;
+}
+
+.ds-markdown a:not(.ds-a):hover,
+.ds-markdown a:not(.ds-a) :focus {
+  -webkit-text-decoration:underline var(--dsw-alias-brand-text);
+  -webkit-text-decoration:underline var(--dsw-alias-brand-text);
+  -webkit-text-decoration:underline var(--dsw-alias-brand-text);
+  text-decoration:underline var(--dsw-alias-brand-text);
+  outline:none;
+}
+
+.ds-markdown a:not(.ds-a):focus-visible {
+  box-shadow:0 0 0 2px var(--dsw-alias-brand-text);
+}
+
+.ds-markdown li>ul,
+.ds-markdown li>ol {
+  margin-top:4px;
+}
+
+.ds-markdown ul,
+.ds-markdown ol {
+  margin:16px 0;
+  padding-left:18px;
+}
+
+.ds-markdown li:not(:first-child) {
+  margin-top:6px;
+}
+
+.ds-markdown li::marker {
+  color:var(--dsw-alias-label-secondary);
+  line-height:28px;
+}
+
+.ds-markdown ul>.ds-markdown-task-list-item {
+  list-style:none;
+}
+
+.ds-markdown ul>.ds-markdown-task-list-item>.ds-markdown-task-checkbox {
+  margin-left:-18px;
+}
+
+.ds-markdown .ds-markdown-task-list-item>.ds-markdown-task-checkbox {
+  color:var(--dsw-alias-label-secondary);
+}
+
+.ds-markdown .ds-markdown-task-list-item>.ds-markdown-task-checkbox+.ds-markdown-paragraph {
+  display:inline;
+}
+
+.ds-markdown ul ol,
+.ds-markdown ol ol {
+  padding-left:0;
+  list-style-position:inside;
+}
+
+.ds-markdown ul ol li p,
+.ds-markdown ol ol li p {
+  display:inline;
+}
+
+.ds-markdown hr {
+  background:var(--dsw-alias-border-l2);
+  border:none;
+  height:1px;
+  margin:32px 0;
+  display:block;
+}
+
+.ds-markdown blockquote {
+  border-left:2px solid var(--dsw-alias-label-caption);
+  margin:16px 0 0;
+  padding-left:14px;
+}
+
+.ds-markdown table {
+  border-collapse:collapse;
+  width:max-content;
+  max-width:max-content;
+}
+
+.ds-markdown th {
+  border-bottom:1px solid var(--dsw-alias-border-l3);
+  font:var(--dsw-font-markdown-table-head);
+  border-top:none;
+  min-width:100px;
+  max-width:min(30vw,320px);
+  padding:10px 16px;
+}
+
+.ds-markdown th:not(:-webkit-any(:lang(ae),
+:lang(ar),
+:lang(arc),
+:lang(bcc),
+:lang(bqi),
+:lang(ckb),
+:lang(dv),
+:lang(fa),
+:lang(glk),
+:lang(he),
+:lang(ku),
+:lang(mzn),
+:lang(nqo),
+:lang(pnb),
+:lang(ps),
+:lang(sd),
+:lang(ug),
+:lang(ur),
+:lang(yi))) {
+  text-align:left;
+}
+
+.ds-markdown th:not(:-moz-any(:lang(ae),
+:lang(ar),
+:lang(arc),
+:lang(bcc),
+:lang(bqi),
+:lang(ckb),
+:lang(dv),
+:lang(fa),
+:lang(glk),
+:lang(he),
+:lang(ku),
+:lang(mzn),
+:lang(nqo),
+:lang(pnb),
+:lang(ps),
+:lang(sd),
+:lang(ug),
+:lang(ur),
+:lang(yi))) {
+  text-align:left;
+}
+
+.ds-markdown th:not(:is(:lang(ae),
+:lang(ar),
+:lang(arc),
+:lang(bcc),
+:lang(bqi),
+:lang(ckb),
+:lang(dv),
+:lang(fa),
+:lang(glk),
+:lang(he),
+:lang(ku),
+:lang(mzn),
+:lang(nqo),
+:lang(pnb),
+:lang(ps),
+:lang(sd),
+:lang(ug),
+:lang(ur),
+:lang(yi))) {
+  text-align:left;
+}
+
+.ds-markdown th:is(:lang(ae),
+:lang(ar),
+:lang(arc),
+:lang(bcc),
+:lang(bqi),
+:lang(ckb),
+:lang(dv),
+:lang(fa),
+:lang(glk),
+:lang(he),
+:lang(ku),
+:lang(mzn),
+:lang(nqo),
+:lang(pnb),
+:lang(ps),
+:lang(sd),
+:lang(ug),
+:lang(ur),
+:lang(yi)) {
+  text-align:right;
+}
+
+.ds-markdown th:first-child {
+  padding-left:0;
+}
+
+.ds-markdown td {
+  border-bottom:1px solid var(--dsw-alias-border-l2);
+  font:var(--dsw-font-markdown-table);
+  min-width:100px;
+  max-width:min(30vw,320px);
+  padding:10px 16px;
+}
+
+.ds-markdown td:first-child {
+  padding-left:0;
+}
+
+.ds-markdown td:last-child {
+  padding-right:0;
+}
+
+.ds-markdown pre {
+  font-family:var(--ds-font-family-code);
+  margin:16px 0;
+  overflow:auto;
+}
+
+.ds-markdown code {
+  box-sizing:border-box;
+  font:var(--dsw-font-markdown-code);
+  font-family:var(--ds-font-family-code);
+  background-color:var(--dsw-alias-markdown-inline-code);
+  border-radius:6px;
+  align-items:center;
+  padding:0 5px;
+  display:inline-flex;
+  font-size:.875em!important;
+}
+
+.ds-markdown h1 code,
+.ds-markdown h2 code,
+.ds-markdown h3 code,
+.ds-markdown h4 code,
+.ds-markdown h5 code,
+.ds-markdown h6 code {
+  font:inherit;
+  font-family:var(--ds-font-family-code);
+}
+
+.ds-markdown table code {
+  font-size:13px;
+}
+
+.ds-markdown-math.katex-display {
+  text-align:center;
+  max-width:100%;
+  padding:4px;
+  display:block;
+  overflow:auto hidden;
+}
+
+.ds-markdown-math-display.ds-markdown-math-svg {
+  justify-content:center;
+  align-items:center;
+  max-width:100%;
+  margin:1em 0;
+  display:flex;
+  overflow:auto hidden;
+}
+
+.ds-markdown-math-display.ds-markdown-math-svg svg {
+  max-width:100%;
+  height:auto;
+  padding:4px;
+  overflow:visible;
+}
+
+.ds-markdown-math-svg {
+  display:inline-flex;
+}
+
+.ds-markdown-math-svg svg {
+  max-width:100%;
+  height:auto;
+  overflow:visible;
+}
+
+.ds-markdown>* .ds-markdown-math {
+  margin:16px 0;
+}
+
+.ds-markdown>* .ds-markdown-math:first-child {
+  margin-top:0;
+}
+
+.ds-markdown>* .ds-markdown-math:last-child {
+  margin-bottom:0;
+}
+
+.ds-markdown-code-copy-button {
+  color:inherit;
+  cursor:pointer;
+  background-color:#fff0;
+  border:none;
+  margin:0;
+  padding:0;
+}
+
+.ds-markdown li>.ds-markdown-paragraph {
+  margin:8px 0;
+}
+
+.ds-markdown li>:first-child {
+  margin-top:0;
+}
+
+.ds-markdown li>:last-child:not(.md-code-block) {
+  margin-bottom:0;
+}
+
+.ds-markdown .ds-markdown-paragraph:first-child {
+  margin-top:0!important;
+}
+
+.ds-markdown .ds-markdown-paragraph:last-child {
+  margin-bottom:0!important;
+}
+
+.ds-markdown>:first-child {
+  margin-top:0!important;
+}
+
+.ds-markdown>:last-child {
+  margin-bottom:0!important;
+}
+
+.ds-markdown-html {
+  font-family:var(--ds-font-family-code);
+}
+
+.ds-markdown-cite {
+  font-variant:tabular-nums;
+  box-sizing:border-box;
+  -webkit-user-select:none;
+  user-select:none;
+  white-space:nowrap;
+  background:var(--dsw-alias-markdown-citation);
+  min-width:18px;
+  height:18px;
+  font:var(--dsw-font-xxxs-strong-11);
+  color:var(--dsw-alias-label-secondary);
+  cursor:pointer;
+  border-radius:12px;
+  flex-shrink:0;
+  justify-content:center;
+  align-items:center;
+  margin:0 3px;
+  padding:0 4px;
+  display:inline-flex;
+  position:relative;
+  top:-2px;
+}
+
+.ds-markdown-cite+.ds-markdown-cite {
+  margin-left:0;
+}
+
+.ds-markdown-cite:hover {
+  background:var(--dsw-alias-interactive-bg-hover-accent);
+}

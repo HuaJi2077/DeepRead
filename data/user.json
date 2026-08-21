@@ -1,0 +1,11 @@
+{
+  "apiKey": "",
+  "baseUrl": "https://api.openai.com/v1",
+  "model": "",
+  "proxy": "",
+  "displayName": "用户",
+  "bossKey": "F3",
+  "darkMode": false,
+  "rememberProgress": true,
+  "searchCount": 3
+}

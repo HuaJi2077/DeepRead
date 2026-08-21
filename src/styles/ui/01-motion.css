@@ -1,0 +1,113 @@
+/* ==========================================================================
+   DeepRead UI 分片 01-motion：动效与加载指示
+   （原 ui.css 第 1-103 行，103 行）
+
+   全局过渡动画类（rail 侧边栏滑入滑出、fade-in-zoom-in 缩放淡入淡出）、
+ds-loading 旋转加载图标及其 @keyframes，以及零散的过渡辅助类。
+   --------------------------------------------------------------------------
+   本文件源自原站构建产物，规则顺序与原文件一致。分片仅按顺序物理切分，
+   不改变层叠结果；严禁调整本目录各分片的先后顺序（见 ui.css 入口）。
+   ========================================================================== */
+
+/* ==========================================================================
+   DeepRead 核心 UI 样式
+   源自原站构建产物，已格式化为可读格式；规则顺序与原文件一致，请勿随意调整顺序（层叠依赖顺序）。
+   ========================================================================== */
+
+.b8812f16 {
+  transition:opacity .16s var(--ds-ease-in-out), transform .3s var(--ds-ease-in-out);
+  will-change:opacity, transform;
+}
+
+.b8812f16._70b689f {
+  transition:opacity .14s var(--ds-ease-in), transform .26s var(--ds-ease-in-out);
+}
+
+.rail-enter-active {
+  transition:opacity .18s var(--ds-ease-out) .16s, transform .18s var(--ds-ease-out) .16s;
+}
+
+.rail-leave-active {
+  transition:opacity .12s var(--ds-ease-in), transform .12s var(--ds-ease-in);
+}
+
+.rail-enter-from,
+.rail-leave-to {
+  opacity:0;
+  transform:translate(-12px);
+}
+
+._52c986b:not(.bd74640a),
+._52c986b:not(.bd74640a):hover {
+  background:#5686fe;
+}
+
+.chat-home-logo {
+  flex-shrink:0;
+  justify-content:center;
+  align-items:center;
+  width:34px;
+  height:25px;
+  margin-right:10px;
+  display:inline-flex;
+}
+
+.chat-home-logo svg {
+  width:100%;
+  height:100%;
+}
+
+.ds-fade-in-zoom-in-expand-enter {
+  opacity:0;
+  transform:scale(.8);
+}
+
+.ds-fade-in-zoom-in-expand-enter-active {
+  opacity:1;
+  transition:max-height var(--ds-ease-in) var(--ds-transition-duration-fast), opacity var(--ds-ease-in) var(--ds-transition-duration-fast), transform var(--ds-ease-in) var(--ds-transition-duration-fast);
+  transform:scale(1);
+}
+
+.ds-fade-in-zoom-in-expand-exit {
+  opacity:1;
+  transform:scale(1);
+}
+
+.ds-fade-in-zoom-in-expand-exit-active {
+  opacity:0;
+  transition:max-height var(--ds-ease-out) var(--ds-transition-duration-fast), opacity var(--ds-ease-out) var(--ds-transition-duration-fast), transform var(--ds-ease-out) var(--ds-transition-duration-fast);
+  transform:scale(.8);
+}
+
+.ds-fade-in-zoom-in-expand-top {
+  align-items:flex-start;
+  display:flex;
+}
+
+.ds-fade-in-zoom-in-expand-center {
+  align-items:center;
+  display:flex;
+}
+
+.ds-loading {
+  width:1em;
+  height:1em;
+  color:inherit;
+  display:inline-flex;
+}
+
+.ds-loading svg {
+  will-change:transform;
+  width:1em;
+  height:1em;
+  animation:.6s linear infinite ds-loading;
+}
+
+@keyframes ds-loading {
+  0% {
+    transform:rotate(0);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}

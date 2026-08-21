@@ -1,0 +1,737 @@
+/* ==========================================================================
+   DeepRead 局部补充样式
+   从原站运行时捕获的计算样式：输入框内字体、Markdown 正文与提问气泡的排版。
+   ========================================================================== */
+
+/* 输入框内部字体（textarea 计算样式，selector 与原站 ._77cefa5 ._27c9245 一致） */
+._77cefa5 ._27c9245,
+._77cefa5 .b13855df {
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  font-variant-ligatures: no-contextual;
+  font-size: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  width: 100%;
+  padding-bottom: 0;
+  padding-left: 16px;
+  padding-right: 12px;
+  padding-top: var(--input-padding-top);
+  min-height: calc(var(--line-height) * 2 + var(--input-padding-top));
+  display: block;
+  box-sizing: border-box;
+  word-break: break-word;
+  white-space: pre-wrap;
+  border: none;
+  margin: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  resize: none;
+  color: var(--dsw-alias-label-primary);
+  caret-color: var(--dsw-alias-brand-text);
+  background-color: transparent;
+  scrollbar-width: none;
+}
+
+/* 回答和提问字体（回答：markdown 正文；提问：气泡） */
+.ds-markdown {
+  font: var(--dsw-font-markdown-base);
+  color: var(--dsw-alias-label-primary);
+  word-break: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+.fbb737a4 {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--dsw-alias-label-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== 内联品牌 SVG（logo-deepread 横版带字 / logo-mark 书本鲸鱼图形）=====
+   说明：这两种标识通过 ?raw + v-html 内联进 DOM，鲸鱼图标的
+   裁剪路径依赖 SVG 内部的 <clipPath>（id 已按文件唯一命名，
+   见各 SVG 文件注释）。此处统一保证：
+   1) svg 按容器尺寸缩放（容器尺寸由 ui.css 中
+      .e066abb8 / ._6acebc2 / .chat-home-logo 定义）；
+   2) 块级显示，消除行内基线导致的底部空隙；
+   3) 过渡动画期间禁止文本选中，避免折叠时的闪烁感。 */
+.e066abb8 svg,
+._6acebc2 svg,
+.chat-home-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ==========================================================================
+   对话消息列表滚动滑块（ChatView.vue）
+   隐藏滑块的规则不止 04-auth.css 的 :not(--show-scrollbar)——03-form.css 的
+   .ds-scroll-area.ds-scroll-area--enabled（两类名，特异性 0,2,0）还设了
+   scrollbar-width:none 与 ::-webkit-scrollbar{display:none}；单类名
+   .chat-scroll（0,1,0）盖不住它，这正是滑块不出现的根因。
+   此处拼上 --enabled 达到同特异性、靠本文件在 ui.css 之后加载取胜，
+   恢复显示并渲染成浏览器默认样式的灰色滑块（8px 宽、圆角灰 thumb、
+   透明轨道；Firefox scrollbar-width:auto 走原生默认灰滑块）。
+   ========================================================================== */
+.chat-scroll.ds-scroll-area--enabled {
+  scrollbar-width: auto;
+}
+
+.chat-scroll.ds-scroll-area--enabled::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+  height: 8px;
+}
+
+.chat-scroll.ds-scroll-area--enabled::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scroll.ds-scroll-area--enabled::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 4px;
+}
+
+.chat-scroll.ds-scroll-area--enabled::-webkit-scrollbar-thumb:hover {
+  background-color: #a8a8a8;
+}
+
+/* ==========================================================================
+   右侧章节导航（ChatView.vue .chat-toc）——复刻原站滚动导航
+   （样式值取自新版样式.txt / 原站页面快照）
+   - 容器：fixed 右侧 16px、垂直居中、34px×300px、圆角 8px、transition all .2s
+   - 背景胶囊：rgba(255,255,255,.8) + blur(5px)、34px 宽、圆角 16px
+   - 条目：高 30px，右端 8×2px 圆角短横点（rgba(0,0,0,.16)），
+     文字在左（13px，折叠时 opacity 0，悬停渐显）
+   - 当前章节：点变品牌蓝 #3964fe 且 scale(1.5)，文字蓝色 + 500
+   - 悬停展开：面板白底 + 阴影（dsw-shadow-lv3）、最大宽 240px、圆角 16px，
+     列表超高 250px 自滚动；离开后仅剩圆点列
+   - 窄视口（<768px）隐藏（与原站一致）
+   ========================================================================== */
+.chat-toc {
+  position: fixed;
+  top: 50%;
+  bottom: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 34px;
+  height: 300px;
+  max-height: calc(100vh - 160px);
+  box-sizing: border-box;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+/* 半透明磨砂背景胶囊：始终可见，撑起窄条外观 */
+.chat-toc__pill {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: -1;
+  width: 34px;
+  height: calc(100% - 8px);
+  max-height: calc(100% - 8px);
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+/* 导航面板：绝对定位于容器右侧（向左生长，不占 34px 窄条空间）；
+   折叠时透明 + 不可点（文字 opacity 0 仅剩圆点），悬停后出现背景与阴影 */
+.chat-toc__panel {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 240px;
+  max-height: 100%;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  pointer-events: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.chat-toc:hover .chat-toc__panel {
+  pointer-events: auto;
+  background: var(--dsw-alias-bg-layer-1, #fff);
+  box-shadow:
+    0 0 1px 0 rgba(0, 0, 0, 0.2),
+    0 0 4px 0 rgba(0, 0, 0, 0.02),
+    0 12px 32px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* 条目列表：右对齐、超高 250px 自身滚动（磨砂胶囊高 300 内） */
+.chat-toc__list {
+  max-height: 250px;
+  box-sizing: border-box;
+  padding: 15px 0 15px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.chat-toc__list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-toc__list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 2px;
+}
+
+/* 条目：文字（左，折叠时透明）+ 圆点（右端） */
+.chat-toc__item {
+  cursor: pointer;
+  height: 30px;
+  width: calc(100% - 6px);
+  margin-right: 8px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: var(--dsw-alias-label-tertiary, #81858c);
+  line-height: 20px;
+}
+
+.chat-toc__text {
+  max-width: 174px;
+  margin-right: 12px;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transition: opacity 0.1s, color 0.2s;
+}
+
+.chat-toc:hover .chat-toc__text {
+  opacity: 1;
+}
+
+.chat-toc__dotbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 圆点短横：8×2px、圆角 4px */
+.chat-toc__dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 2px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.16);
+  transition: background-color 0.2s;
+}
+
+/* 悬停单条：文字与圆点加深 */
+.chat-toc__item:hover {
+  color: var(--dsw-alias-label-primary, #0f1115);
+}
+
+.chat-toc__item:hover .chat-toc__dot {
+  background-color: var(--dsw-alias-label-primary, #0f1115);
+}
+
+/* 当前章节：品牌蓝圆点放大 1.5 倍，文字蓝色加粗。
+   圆点用 brand-primary（暗色未覆盖，两种主题恒为品牌蓝 #3964fe）；
+   文字用 brand-text（暗色自动提亮为 #679efe 保证可读） */
+.chat-toc__item--current .chat-toc__text {
+  color: var(--dsw-alias-brand-text, #3964fe);
+  font-weight: 500;
+}
+
+.chat-toc__item--current .chat-toc__dot {
+  background-color: var(--dsw-alias-brand-primary, #3964fe);
+  transform-origin: 50%;
+  transform: scale(1.5);
+}
+
+/* 窄视口隐藏（与原站一致） */
+@media not all and (width >= 768px) {
+  .chat-toc {
+    display: none;
+  }
+}
+
+/* 正文内 URL 超链接（Wiki 搜索结果等，新标签页打开）：
+   品牌蓝、无默认下划线，悬停下划线反馈；暗色下经 brand-text 自动提亮 */
+.chat-text-link {
+  color: var(--dsw-alias-brand-text, #3964fe);
+  text-decoration: none;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+.chat-text-link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   回到底部按钮（ChatView.vue .chat-jump）
+   浮于输入区（sticky ._871cbca）上方，与发送按钮同一竖轴线：
+   发送按钮右缘 = 输入表面右缘内缩 13px（工具栏 padding 12 + 边框 1）。
+   绝对定位子元素的包含块是 ._871cbca 的内边距盒（宽 = 主列宽 - 左右
+   32px margin），而 ._871cbca 自身的水平 padding 按其包含块（主列宽）
+   计算居中——两者的 100% 基准相差 64px，故此处 +64px 修正后才能复现
+   同一 padding 值（窄屏 margin 16px 时同理 +32px；<440px 时 ._871cbca
+   padding 归零，直接偏移 13px）。仅在滚动位置离开底部时淡入。
+   ========================================================================== */
+.chat-jump {
+  position: absolute;
+  right: calc(max(0px, (100% + 64px - var(--message-list-max-width)) / 2) + 13px);
+  bottom: calc(100% + 12px);
+  z-index: 11;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+
+.chat-jump--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.chat-jump__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--dsw-alias-surface-primary, #fff);
+  border: 1px solid #dcdcdc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  color: var(--dsw-alias-label-primary, #1a1a1a);
+  cursor: pointer;
+}
+
+.chat-jump__btn:hover {
+  background: var(--dsw-alias-fill-secondary, #f1f3f5);
+}
+
+.chat-jump__btn svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+@media not all and (width >= 768px) {
+  .chat-jump {
+    right: calc(max(0px, (100% + 32px - var(--message-list-max-width)) / 2) + 13px);
+  }
+}
+
+@media not all and (width >= 440px) {
+  .chat-jump {
+    right: 13px;
+  }
+}
+
+/* 进入会话时的暂隐状态：滚动定位到底部前隐藏消息区（visibility 保留布局
+   尺寸，虚拟列表测量与图片加载不受影响），定位完成即移除 */
+.chat-list--entering {
+  visibility: hidden;
+}
+
+/* ==========================================================================
+   输入框附件按钮：快捷操作菜单（ChatInput.vue .chat-attach-menu）
+   左右两栏：左侧「书架书籍」（点击填入「开始阅读：书名」）、
+   右侧「快捷指令」（点击填入指令），两栏各自独立滚动。
+   菜单经 Teleport 挂 body、fixed 定位（右对齐附件按钮、向上弹出，
+   坐标由组件内联提供）：输入框表面/工具栏均带 overflow:hidden，
+   在组件内用 absolute 定位会被裁剪成空白框。
+   ========================================================================== */
+.chat-attach-menu {
+  position: fixed;
+  z-index: 1200;
+  width: 460px;
+  max-width: calc(100vw - 24px);
+  box-sizing: border-box;
+  padding: 8px;
+  background: var(--dsw-alias-bg-layer-1, #fff);
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  box-shadow:
+    0 0 1px 0 rgba(0, 0, 0, 0.2),
+    0 12px 32px 0 rgba(0, 0, 0, 0.08);
+  animation: chat-attach-menu-in 0.15s ease-out;
+}
+
+@keyframes chat-attach-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 两栏并排（书架左、指令右），等宽分配 */
+.chat-attach-menu__cols {
+  display: flex;
+  align-items: stretch;
+}
+
+.chat-attach-menu__col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 右栏与左栏之间的竖直分隔线 */
+.chat-attach-menu__col + .chat-attach-menu__col {
+  margin-left: 8px;
+  padding-left: 8px;
+  border-left: 1px solid var(--dsw-alias-border-l4, rgba(0, 0, 0, 0.08));
+}
+
+.chat-attach-menu__title {
+  padding: 6px 8px 4px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary, #81858c);
+  white-space: nowrap;
+}
+
+.chat-attach-menu__list {
+  flex: 1;
+  min-height: 72px;
+  max-height: 264px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.chat-attach-menu__list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-attach-menu__list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 2px;
+}
+
+.chat-attach-menu__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.chat-attach-menu__item:hover {
+  background: var(--dsw-alias-fill-secondary, #f1f3f5);
+}
+
+.chat-attach-menu__item-text {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-primary, #0f1115);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-attach-menu__item-meta {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary, #81858c);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-attach-menu__hint {
+  padding: 10px 8px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary, #81858c);
+  text-align: center;
+}
+
+/* ==========================================================================
+   对话消息内容块样式（ChatView.vue）
+   助手回复按 blocks 渲染：页码头（header）/ 正文段落（text）/ 原书图片（image）。
+   ========================================================================== */
+
+/* 页码头：《书名》第 X / XX 页(章) 已读：X% —— 加粗、独立成段 */
+.chat-page-header {
+  font-weight: 600;
+}
+
+/* 原书图片：限宽自适应、圆角、轻投影；块级排版使其在文字流中占位正确 */
+.chat-page-image {
+  display: block;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  margin: 12px 0;
+}
+
+/* 图片加载失败的降级提示（img @error 后替换显示） */
+.chat-image-fallback {
+  font-size: 13px;
+  color: var(--dsw-alias-label-tertiary, #8f959e);
+}
+
+/* 目录消息（type: 'toc' 块）：每章一条蓝色超链接，点击自动发送「跳转：章节名」 */
+.chat-toc-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  margin: 4px 0;
+}
+
+.chat-toc-link {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgb(57, 100, 254);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.chat-toc-link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   共享操作菜单与弹窗样式
+   使用方：书架卡片菜单（ShelfView.vue）、历史对话三点菜单（SideBar.vue）。
+   任何需要「卡片操作菜单 / 居中弹窗 / 胶囊按钮」的组件统一复用本段类名，
+   不要在组件 scoped 样式中重复定义。
+   ========================================================================== */
+
+/* ---------- 卡片操作菜单（点击目标右侧弹出的竖排菜单） ---------- */
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+}
+
+.card-menu {
+  position: fixed;
+  width: 140px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--dsw-alias-surface-primary, #fff);
+  border: 1px solid #dcdcdc; /* 统一灰色描边 */
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: none;
+  background: none;
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--dsw-alias-label-primary, #1a1a1a);
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: var(--dsw-alias-fill-secondary, #f1f3f5);
+}
+
+.menu-danger {
+  color: var(--dsw-alias-label-alert, #e0564f);
+}
+
+.menu-icon {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.menu-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- 重命名输入框（弹窗主体为 ds-modal，固定宽度 380px） ---------- */
+.rename-input {
+  width: 100%;
+  box-sizing: border-box; /* 必需：否则 width:100% + padding 撑破容器右边界 */
+  padding: 9px 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--dsw-alias-label-primary, #1a1a1a);
+  /* 显式透明：否则浏览器 input 默认浅色 field 底，暗黑模式下输入框发白 */
+  background: transparent;
+  outline: none;
+}
+
+.rename-input:focus {
+  border-color: var(--dsw-alias-brand-primary, #3964fe);
+}
+
+/* ---------- ds-modal 弹窗（重命名 / 更多信息 / 删除确认，统一结构） ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.32);
+}
+
+/* 统一灰色描边线条（所有弹窗一致；宽度由 ds-modal 固定为 380px，不随内容伸缩） */
+.modal-stroke {
+  border: 1px solid #dcdcdc;
+  /* Edge 缩放模式修复：全局 ds-modal-content 的 max-width 用 calc(100vw - 32px)，
+     Edge 页面缩放下 100vw 测量值与真实视口不符（Chrome 正常），背景板被错误压缩、
+     文字溢出边缘。此处改用包含块百分比——父级 .modal-backdrop 为全屏 flex 容器，
+     100% 随实际布局实时计算，避开 vw 单位缺陷；窄视口下仍保留收缩保护 */
+  max-width: calc(100% - 32px);
+}
+
+/* ---------- 统一弹窗按钮：胶囊形 + 纯灰描边 + 固定尺寸 ---------- */
+.modal-btn {
+  height: 34px;
+  min-width: 88px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border: 1px solid #dcdcdc; /* 纯灰描边 */
+  border-radius: 999px;      /* 胶囊/椭圆形 */
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-primary, #1a1a1a);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.modal-btn:hover {
+  background: var(--dsw-alias-fill-secondary, #f1f3f5);
+}
+
+.modal-btn--primary {
+  background: var(--dsw-alias-brand-primary, #3964fe);
+  color: #fff;
+}
+
+.modal-btn--primary:hover {
+  background: var(--dsw-alias-brand-primary, #3964fe);
+  opacity: 0.9;
+}
+
+.modal-btn--danger {
+  background: rgb(236, 19, 19);
+  color: #fff;
+}
+
+.modal-btn--danger:hover {
+  background: rgb(242, 90, 90);
+  opacity: 1;
+}
+
+/* ---------- 帮助菜单弹窗（右上角帮助按钮，组件 HelpButton.vue）：内容解析 data/help.json ---------- */
+/* 帮助内容比常规弹窗宽且长：覆盖默认 380px 弹窗宽度，主体区限高自滚动。
+   选择器须带 .ds-modal-content 提升到与 03-form.css 的
+   .ds-modal-content.ds-modal-content--dialog（0,2,0）同特异性，
+   靠本文件后加载取胜，否则 380px 依旧生效 */
+.ds-modal-content.help-modal {
+  --dsl-modal-content-width: 560px;
+}
+
+/* 帮助弹窗标题居中（默认左对齐） */
+.help-modal .ds-modal-content__title {
+  text-align: center;
+}
+
+.help-modal__main {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.help-section + .help-section {
+  margin-top: 14px;
+}
+
+.help-section__heading {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary, #1a1a1a);
+}
+
+/* 条目为纯文本段落（无 name 小标题）：pre-line 使 json 中的 \n 渲染为换行 */
+.help-item {
+  margin: 0;
+  padding: 2px 0;
+  font-size: 13px;
+  line-height: 21px;
+  white-space: pre-line;
+  color: var(--dsw-alias-label-secondary, #464956);
+}
+
+.help-modal__error {
+  margin: 0;
+  font-size: 13px;
+  color: var(--dsw-alias-label-tertiary, #8f919f);
+}
+
+/* GitHub仓库按钮：胶囊按钮 + 图标（svg 原始 32px，统一压到 16px） */
+.help-modal__repo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.help-modal__repo-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.help-modal__repo-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
