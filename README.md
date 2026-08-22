@@ -36,6 +36,8 @@ An e-book reader styled after the DeepSeek web page. Want to sneak in some readi
 
 QQ 交流群：1106973682
 
+BiliBili 视频：https://www.bilibili.com/video/BV1fr8m6yEv3/?share_source=copy_web&vd_source=ee721aed908ac0ee05413780937947c9
+
 ## 快速开始
 
 要求 Node.js ≥ 22（`node:sqlite` 依赖）

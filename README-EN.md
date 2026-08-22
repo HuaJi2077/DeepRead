@@ -34,6 +34,8 @@ Feel free to report issues or submit improvements via Pull Request. **If you lik
 
 QQ Group: 1106973682
 
+BiliBili Video：https://www.bilibili.com/video/BV1fr8m6yEv3/?share_source=copy_web&vd_source=ee721aed908ac0ee05413780937947c9
+
 ## Getting Started
 
 Requires Node.js ≥ 22 (`node:sqlite` dependency)
