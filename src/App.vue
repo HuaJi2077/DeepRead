@@ -16,8 +16,8 @@ const settings = useSettingsStore() // 用户设置（暗黑模式/进度记忆�
 const route = useRoute()
 
 /* ---------- 全局快捷键（老板键）：跳转官方网站 ---------- */
-// 官方网站地址来自 data/help.json 的 repoUrl（设置页/帮助菜单的 GitHub 仓库同源），
-// 启动时拉取缓存，未就绪时按下则现场拉取一次。
+// 官方网站地址来自 data/user.json 的 officialSiteUrl（后端 /api/settings 下发，
+// GitHub 仓库按钮用同文件里的 repoUrl），启动时拉取缓存，未就绪时按下则现场拉取一次。
 // 键位可改（用户设置页「老板键」绑定，存 user.json，默认 F3）；
 // F3 原生行为是「查找下一个」，preventDefault 后整页任意位置按下均直达。
 // 绑定为单字符键（字母/数字）时在输入控件内不触发，避免正常打字误跳转。
@@ -27,8 +27,8 @@ let officialSiteUrl = ''
 async function loadOfficialSiteUrl() {
   if (officialSiteUrl) return officialSiteUrl
   try {
-    const res = await fetch('/data/help.json', { cache: 'no-store' })
-    if (res.ok) officialSiteUrl = (await res.json()).repoUrl || ''
+    const res = await fetch('/api/settings', { cache: 'no-store' })
+    if (res.ok) officialSiteUrl = (await res.json()).officialSiteUrl || ''
   } catch {
     /* 网络异常时保持空，跳转动作直接忽略 */
   }

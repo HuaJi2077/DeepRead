@@ -2,7 +2,8 @@
 // 帮助按钮 + 帮助菜单弹窗（共用组件）
 // - 按钮固定于视口右上角（.help-corner 见 ui.css），在 ChatView / ChatHome 两处复用
 // - 弹窗内容解析 data/help.json 渲染（对话指令 / 页面功能 / 快捷键等分区）
-// - 底部「GitHub仓库」按钮跳转 json 中的 repoUrl（链接可直接在 json 中修改）
+// - 底部「GitHub仓库」按钮跳转 data/user.json 的 repoUrl（后端 /api/settings 下发，
+//   链接可直接在 user.json 中修改）
 // - help.json 首次打开时拉取一次，之后沿用缓存；加载失败显示降级提示
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import iconHelpCircle from '@/assets/icons/help-circle.svg?raw'
@@ -32,10 +33,16 @@ async function openHelp() {
   }
 }
 
-/** 跳转 GitHub 仓库 */
-function openRepo() {
-  const url = data.value?.repoUrl
-  if (url) window.open(url, '_blank', 'noopener')
+/** 跳转 GitHub 仓库（地址在 data/user.json 的 repoUrl） */
+async function openRepo() {
+  try {
+    const res = await fetch('/api/settings', { cache: 'no-store' })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const url = (await res.json())?.repoUrl
+    if (url) window.open(url, '_blank', 'noopener')
+  } catch {
+    /* 获取失败静默忽略，不跳转 */
+  }
 }
 </script>
 

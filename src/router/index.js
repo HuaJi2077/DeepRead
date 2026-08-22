@@ -28,38 +28,38 @@ const routes = [
     path: '/',
     name: 'home',
     component: () => import('@/views/ChatHome.vue'),   // 主页：问候 + 模式选择 + 输入框
-    meta: { title: 'DeepRead - 深度阅读对话' },
+    meta: { title: 'DeepRead - 深度阅读' },
   },
   {
     // 动态对话页：:id 为对话唯一标识（当前测试对话固定为 test）
     path: '/chat/:id',
     name: 'chat',
     component: () => import('@/views/ChatView.vue'),
-    meta: { title: '对话 - DeepRead' },
+    meta: { title: 'DeepRead - 对话模式' },
   },
   {
     path: '/reading',
     name: 'reading',
     component: () => import('@/views/ReadingView.vue'), // 阅读模式页：书籍网格 → 打开阅读器
-    meta: { title: '阅读模式 - DeepRead' },
+    meta: { title: 'DeepRead - 阅读模式' },
   },
   {
     path: '/shelf',
     name: 'shelf',
     component: () => import('@/views/ShelfView.vue'),   // 我的书架页：导入 / 重命名 / 删除书籍
-    meta: { title: '我的书架 - DeepRead' },
+    meta: { title: 'DeepRead - 我的书架' },
   },
   {
     path: '/search',
     name: 'search',
     component: () => import('@/views/SearchView.vue'), // 搜索页（占位）
-    meta: { title: '搜索 - DeepRead' },
+    meta: { title: 'DeepRead - 对话搜索' },
   },
   {
     path: '/user',
     name: 'user',
     component: () => import('@/views/UserView.vue'),   // 用户设置页（占位）
-    meta: { title: '用户设置 - DeepRead' },
+    meta: { title: 'DeepRead - 用户设置' },
   },
   // 兜底：未匹配的路径重定向回主页
   { path: '/:pathMatch(.*)*', redirect: '/' },

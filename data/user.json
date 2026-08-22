@@ -5,6 +5,8 @@
   "proxy": "",
   "displayName": "用户",
   "bossKey": "F3",
+  "repoUrl": "https://github.com/HuaJi2077/DeepRead",
+  "officialSiteUrl": "https://chat.deepseek.com/",
   "darkMode": false,
   "rememberProgress": true,
   "searchCount": 3

@@ -8,6 +8,8 @@
  * - proxy           HTTP 代理地址（空串 = 自动检测环境变量与 Windows 系统代理）
  * - displayName     显示名称（侧边栏用户卡块文案，≤10 字符，空 = 默认「用户」）
  * - bossKey         老板键（KeyboardEvent.key，默认 F3；按下即跳转官方网站）
+ * - repoUrl         GitHub 仓库地址（帮助菜单/设置页的「GitHub 仓库」按钮）
+ * - officialSiteUrl 官方网站地址（老板键跳转目标）
  * - darkMode        暗黑模式开关（前端 body[data-ds-dark-theme]）
  * - rememberProgress 记忆阅读进度（阅读模式打开书自动跳到上次位置）
  * - searchCount     Wiki 搜索展示条目数（1-5，默认 3）
@@ -29,6 +31,8 @@ const DEFAULTS = {
   proxy: '',
   displayName: '用户',
   bossKey: 'F3',
+  repoUrl: 'https://github.com/HuaJi2077/DeepRead',
+  officialSiteUrl: 'https://chat.deepseek.com/',
   darkMode: false,
   rememberProgress: true,
   searchCount: 3,
@@ -39,6 +43,13 @@ function clampInt(value, min, max, fallback) {
   const n = Number.parseInt(value, 10)
   if (Number.isNaN(n)) return fallback
   return Math.max(min, Math.min(max, n))
+}
+
+/** URL 收敛：非 http(s) 字符串回默认值，去尾部斜杠 */
+function normalizeUrl(value, fallback) {
+  if (typeof value !== 'string') return fallback
+  const url = value.trim()
+  return /^https?:\/\//i.test(url) ? url.replace(/\/+$/, '') : fallback
 }
 
 /**
@@ -64,6 +75,8 @@ function normalizeConfig(raw) {
       typeof src.bossKey === 'string' && src.bossKey.trim()
         ? src.bossKey.trim().slice(0, 20)
         : DEFAULTS.bossKey,
+    repoUrl: normalizeUrl(src.repoUrl, DEFAULTS.repoUrl),
+    officialSiteUrl: normalizeUrl(src.officialSiteUrl, DEFAULTS.officialSiteUrl),
     darkMode: src.darkMode === true,
     rememberProgress: src.rememberProgress !== false,
     searchCount: clampInt(src.searchCount, 1, 5, DEFAULTS.searchCount),

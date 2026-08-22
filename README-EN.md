@@ -4,9 +4,11 @@
 	This project is purely for entertainment and is not affiliated with DeepSeek. Contact us for removal in case of infringement. Fully open source, no commercial fees whatsoever.</strong>
 </p>
 
-**English** | [简体中文](README.md)
+
 
 ## Introduction
+
+[简体中文](README.md) | English
 
 An e-book reader styled after the DeepSeek web page. Want to sneak in some reading at work? This software replicates the DeepSeek website 1:1 — it looks like you're chatting with an AI, while you're actually reading an e-book. A built-in boss key jumps straight to the DeepSeek official site with one click.
 
@@ -26,7 +28,7 @@ The code is 100% AI-coded — though architected, modified, reviewed, tested, an
 
 ## Development & Feedback
 
-Feel free to report issues or submit improvements via Pull Request. <strong>If you like this project, please give us a <font color=orange>Star</font>🌟.</strong>
+Feel free to report issues or submit improvements via Pull Request. **If you like this project, please give us a🌟.**
 
 **Note: when submitting a PR, please include a description and verification results; AI-generated code is welcome, but it must be human-reviewed.**
 

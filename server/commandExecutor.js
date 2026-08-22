@@ -230,12 +230,15 @@ export async function executeCommand(input, conversationId = null, tool = null) 
 
   const action = command.action
 
-  // 彩蛋指令：无需关联书籍，直接输出彩蛋图片并把对话命名为「彩蛋」。
+  // 彩蛋指令：无需关联书籍，直接输出彩蛋图片。
   // 图片走静态路由 /data/easter-egg.png（见 staticServe.js），blocks 持久化
   // 到 messages.blocks——否则重进会话时无 pageNumber 可重建，图片会丢失
   if (action === 'EASTER_EGG') {
+    // 仅「一上来就触发」（对话尚无任何消息）命名为「彩蛋」；
+    // 已有内容的对话保持原名，不因触发彩蛋被强制改名
+    const existed = conversationId ? getConversation(conversationId) : null
     const conv = ensureConversation(conversationId, '彩蛋')
-    if (conv.title !== '彩蛋') {
+    if (existed && getMessages(existed.id).length === 0 && conv.title !== '彩蛋') {
       updateConversation(conv.id, { title: '彩蛋' })
       conv.title = '彩蛋'
     }

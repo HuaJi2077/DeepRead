@@ -8,7 +8,7 @@
 
 ## 项目介绍
 
-**简体中文 | [English](README-EN.md) **
+简体中文 | [English](README-EN.md) 
 
 DeepSeek 网页样式的电子书阅读器。上班时想要摸鱼读电子书？本软件 1:1 复刻 DeepSeek 网页，看似在和 AI 对话，实则在摸鱼读书。内置老板键，可以一键跳转到 DeepSeek 官网。
 
@@ -30,7 +30,7 @@ An e-book reader styled after the DeepSeek web page. Want to sneak in some readi
 
 ## 开发交流
 
-欢迎大家通过 Issue 反馈问题，通过 Pull Request 提交改进，<strong>如果喜欢的话麻烦点一个<font color=orange>Star</font>🌟。</strong>
+欢迎大家通过 Issue 反馈问题，通过 Pull Request 提交改进，**如果喜欢的话麻烦点一个Start🌟。**
 
 **注意：PR 代码时，请附上说明信息和验证结果；可以提交 AI 代码，但是务必经过人工审查。**
 

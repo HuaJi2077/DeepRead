@@ -8,7 +8,7 @@
  * - 获取模型 / 测试AI：按「页面当前值」请求（支持未保存的临时值），
  *   通过后再落盘，避免「先保存才能测」的两步往返
  * - 清空对话 / 清空书架 / 重置设置：红色按钮 + 统一弹窗二次确认
- * - GitHub仓库：复用帮助菜单的按钮样式（help-modal__repo，跳 help.json 的 repoUrl）
+ * - GitHub仓库：复用帮助菜单的按钮样式（help-modal__repo，跳 user.json 的 repoUrl）
  *
  * 出错提示：ToastTip 的 danger 变体（半透明红底白字）；
  * 常规成功提示：ToastTip 默认样式（半透明黑底白字）。
@@ -262,10 +262,10 @@ async function resetSettings() {
   }
 }
 
-/* ---------- GitHub 仓库（地址来自 data/help.json） ---------- */
+/* ---------- GitHub 仓库（地址来自 data/user.json 的 repoUrl） ---------- */
 async function openRepo() {
   try {
-    const res = await fetch('/data/help.json', { cache: 'no-store' })
+    const res = await fetch('/api/settings', { cache: 'no-store' })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
     const url = data?.repoUrl
